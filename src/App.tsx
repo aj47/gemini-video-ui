@@ -16,11 +16,11 @@ function App() {
   const [videoEl] = useAtom(videoElAtom);
 
   return (
-    <>
-      <h1 className="text-xl mb-6">Gemini Video Scrubber</h1>
+    <div className="min-h-screen bg-gray-900 text-white p-4">
+      <h1 className="text-3xl font-bold mb-6">Gemini Video Scrubber</h1>
       <Video />
-      {videoEl ?
-        <>
+      {videoEl ? (
+        <div className="space-y-4">
           <Annotations />
           <Controls />
           <Timelines />
@@ -28,9 +28,11 @@ function App() {
           <VideoState />
           <Gemini />
           <TimestampText />
-        </> : <VideoInput />
-      }
-    </>
+        </div>
+      ) : (
+        <VideoInput />
+      )}
+    </div>
   );
 }
 

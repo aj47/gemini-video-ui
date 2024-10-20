@@ -36,12 +36,12 @@ export function ClickableTimestamps() {
   });
 
   return (
-    <div className="flex flex-wrap gap-1 p-1">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-2 bg-gray-800 rounded-lg max-h-64 overflow-y-auto">
       {timestamps.map((tobject, i) => {
         return (
           <div
             key={`${tobject.start}-${i}`}
-            className="bg-neutral-600 hover:bg-neutral-500 select-none cursor-pointer px-1"
+            className="bg-gray-700 hover:bg-gray-600 select-none cursor-pointer p-2 rounded transition-colors"
             onClick={() => {
               const { start, end } = timestampSeconds[i];
               const timelineWidth = videoLength * secondWidth;
@@ -67,7 +67,12 @@ export function ClickableTimestamps() {
               );
             }}
           >
-            {tobject.start}{tobject.end ? `-${tobject.end}` : ""} {tobject.annotation ? `${tobject.annotation}` : ""}
+            <div className="font-mono text-sm text-gray-300">
+              {tobject.start}{tobject.end ? `-${tobject.end}` : ""}
+            </div>
+            <div className="text-sm truncate">
+              {tobject.annotation ? `${tobject.annotation}` : ""}
+            </div>
           </div>
         );
       })}

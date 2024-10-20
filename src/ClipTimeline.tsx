@@ -45,7 +45,7 @@ export function ClipTimeline() {
 
   return (
     <div
-      className="bg-neutral-700 h-8 relative cursor-crosshair"
+      className="bg-gray-800 h-12 relative cursor-crosshair rounded-lg overflow-hidden"
       {...timelineDrag()}
       style={{
         width: timelineWidth,
@@ -60,24 +60,23 @@ export function ClipTimeline() {
         return (
           <div
             key={`${range}-${i}`}
-            className="absolute bg-neutral-500 h-8 pointer-events-none border-l-2 border-neutral-600"
+            className="absolute bg-blue-500 opacity-50 h-full pointer-events-none border-l border-blue-600"
             style={{
               width: visWidth,
-              top: 0,
               left: `${(start / player.duration) * 100}%`,
             }}
           ></div>
         );
       })}
       <div
-        className="absolute bg-white h-8 pointer-events-none"
+        className="absolute bg-red-500 h-full pointer-events-none"
         style={{
           width: 2,
-          top: 0,
           marginLeft: -1,
           left: `${(playPosition / player.duration) * 100}%`,
         }}
       ></div>
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gray-700"></div>
     </div>
   );
 }

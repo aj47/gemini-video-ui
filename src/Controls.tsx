@@ -38,48 +38,40 @@ export function Controls() {
   const player = videoEl!;
 
   return (
-    <div className="flex justify-between select-none">
-      <div className="flex gap-px">
-        {isPlaying ? (
-          <button
-            className="px-2 w-16 bg-neutral-600 hover:bg-neutral-700 py-1"
-            onClick={() => player.pause()}
-          >
-            Pause
-          </button>
-        ) : (
-          <button
-            className="px-2 w-16 py-1 bg-neutral-600 hover:bg-neutral-700"
-            onClick={() => player.play()}
-          >
-            Play
-          </button>
-        )}
+    <div className="flex flex-col md:flex-row justify-between select-none bg-gray-800 p-4 rounded-lg">
+      <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
         <button
-          className="px-2 py-1 bg-neutral-600 hover:bg-neutral-700"
+          className={`px-4 py-2 rounded-md ${
+            isPlaying
+              ? "bg-red-600 hover:bg-red-700"
+              : "bg-green-600 hover:bg-green-700"
+          }`}
+          onClick={() => (isPlaying ? player.pause() : player.play())}
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md"
           onClick={() => {
             player.currentTime = 0;
           }}
         >
           Reset
         </button>
-        {isPlayingAll ? (
-          <button
-            className="px-2 py-1 bg-neutral-600 hover:bg-neutral-700"
-            onClick={() => {
+        <button
+          className={`px-4 py-2 rounded-md ${
+            isPlayingAll
+              ? "bg-red-600 hover:bg-red-700"
+              : "bg-green-600 hover:bg-green-700"
+          }`}
+          onClick={() => {
+            if (isPlayingAll) {
               setIsPlayingAll(false);
               if (timeoutRef.current) {
                 window.clearTimeout(timeoutRef.current);
               }
               player.pause();
-            }}
-          >
-            Stop all timestamps
-          </button>
-        ) : (
-          <button
-            className="px-2 py-1 bg-neutral-600 hover:bg-neutral-700"
-            onClick={() => {
+            } else {
               setIsPlayingAll(true);
               function getNextTimestamp() {
                 for (const range of timestampSeconds) {
@@ -111,19 +103,19 @@ export function Controls() {
                 }
               }
               playTimestamps();
-            }}
-          >
-            Play all timestamps
-          </button>
-        )}
+            }
+          }}
+        >
+          {isPlayingAll ? "Stop all timestamps" : "Play all timestamps"}
+        </button>
       </div>
-      <div className="flex gap-1">
-        <div className="px-1 py-1 flex items-center gap-1">
-          <div className="text-sm text-neutral-300">pad clip start:</div>
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-gray-300">Pad clip start:</label>
           <input
             type="number"
             step="0.1"
-            className="w-14 px-1 bg-neutral-300 text-black text-sm"
+            className="w-20 px-2 py-1 bg-gray-700 text-white text-sm rounded"
             value={padStart}
             onChange={(e) => {
               const value = Number(e.target.value);
@@ -131,12 +123,12 @@ export function Controls() {
             }}
           />
         </div>
-        <div className="px-1 py-1 flex items-center gap-1">
-          <div className="text-sm text-neutral-300">default clip duration:</div>
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-gray-300">Default clip duration:</label>
           <input
             type="number"
             step="0.1"
-            className="w-14 px-1 bg-neutral-300 text-black text-sm"
+            className="w-20 px-2 py-1 bg-gray-700 text-white text-sm rounded"
             value={timestampDefaultDuration}
             onChange={(e) => {
               const value = Number(e.target.value);
